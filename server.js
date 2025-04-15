@@ -26,4 +26,5 @@ app.delete("/notes/:id", async (req, res) => {
 })
 
 // node server.js
+// npx prisma studio
 app.listen(3001, () => console.log("Server running on http://localhost:3001"))
