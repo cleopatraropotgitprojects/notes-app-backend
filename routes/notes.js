@@ -23,9 +23,8 @@ router.post('/', async (req, res) => {
             data: {
                 title: req.body.title || '',
                 description: req.body.description || '',
-                tags: req.body.tags || [],
+                tags: Array.isArray(req.body.tags) ? req.body.tags : [],
                 location: req.body.location || null,
-                sharedWithUsersCount: req.body.sharedWithUsersCount || null
             }
         })
         res.status(201).json(newNote)

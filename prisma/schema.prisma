@@ -9,9 +9,9 @@ generator client {
 
 model Note {
   id          String   @id @default(cuid())
-  title       String
-  description String
-  tags        String[] // tip array text
+  title       String? // acum este opțional
+  description String? // la fel
+  tags        String[] // rămâne obligatoriu, dar vom trimite [] by default
   createdAt   DateTime @default(now())
-  location    String? // optional
+  location    String?
 }
