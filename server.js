@@ -8,6 +8,8 @@ app.use(express.json())
 const notesRouter = require('./routes/notes')
 app.use('/api/notes', notesRouter)
 
+
+const port = 3001
 // node server.js
 // npx prisma studio
 app.listen(port, () => {
