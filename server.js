@@ -1,13 +1,11 @@
 const express = require('express')
 const cors = require('cors')
-const notesRouter = require('./routes/notes')
 
 const app = express()
-const port = 3001
-
 app.use(cors())
 app.use(express.json())
 
+const notesRouter = require('./routes/notes')
 app.use('/api/notes', notesRouter)
 
 // node server.js

@@ -21,16 +21,16 @@ router.post('/', async (req, res) => {
     try {
         const newNote = await prisma.note.create({
             data: {
-                title: '',
-                description: '',
-                tags: [],
-                location: null,
-                sharedWithUsersCount: null,
+                title: req.body.title || '',
+                description: req.body.description || '',
+                tags: req.body.tags || [],
+                location: req.body.location || null,
+                sharedWithUsersCount: req.body.sharedWithUsersCount || null
             }
         })
         res.status(201).json(newNote)
     } catch (err) {
-        console.error('Error creating note:', err)
+        console.error('❌ Error creating note:', err)
         res.status(500).json({ error: 'Could not create note' })
     }
 })
