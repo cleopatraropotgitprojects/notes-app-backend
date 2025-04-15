@@ -8,8 +8,10 @@ generator client {
 }
 
 model Note {
-  id        String   @id @default(cuid())
-  title     String
-  content   String
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  tags        String[] // tip array text
+  createdAt   DateTime @default(now())
+  location    String? // optional
 }
