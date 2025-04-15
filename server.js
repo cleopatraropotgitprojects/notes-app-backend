@@ -15,9 +15,14 @@ app.get("/notes", async (req, res) => {
 
 app.post("/notes", async (req, res) => {
     const { title, content } = req.body
-    console.log("📥 Received note:", { title, content })
-    const note = await prisma.note.create({ data: { title, content } })
-    res.json(note)
+    console.log("📥 Received note:", { title, content }) // 👈 AICI
+    try {
+        const note = await prisma.note.create({ data: { title, content } })
+        res.json(note)
+    } catch (err) {
+        console.error("❌ Error creating note:", err)
+        res.status(500).json({ error: "Failed to create note" })
+    }
 })
 
 app.delete("/notes/:id", async (req, res) => {
