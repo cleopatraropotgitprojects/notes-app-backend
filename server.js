@@ -15,6 +15,7 @@ app.get("/notes", async (req, res) => {
 
 app.post("/notes", async (req, res) => {
     const { title, content } = req.body
+    console.log("📥 Received note:", { title, content })
     const note = await prisma.note.create({ data: { title, content } })
     res.json(note)
 })
