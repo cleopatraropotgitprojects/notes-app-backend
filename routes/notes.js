@@ -4,7 +4,6 @@ const { PrismaClient } = require('@prisma/client')
 const router = express.Router()
 const prisma = new PrismaClient()
 
-// GET /api/notes
 router.get('/', async (req, res) => {
     const trashed = req.query.trashed === 'true'
     try {

@@ -5,10 +5,14 @@ const prisma = new PrismaClient();
 
 router.get('/', async (req, res) => {
     try {
-        const totalNotes = await prisma.note.count();
-        const pinnedNotes = await prisma.note.count({
-            where: { pinned: true },
+        const totalNotes = await prisma.note.count({
+            where: { trashed: false },
         });
+
+        const pinnedNotes = await prisma.note.count({
+            where: { trashed: false, pinned: true },
+        });
+
         const deletedNotes = await prisma.note.count({
             where: { trashed: true },
         });
@@ -16,6 +20,7 @@ router.get('/', async (req, res) => {
         const notesPerDay = await prisma.note.groupBy({
             by: ['createdAt'],
             _count: { id: true },
+            where: { trashed: false },
         });
 
         res.json({
