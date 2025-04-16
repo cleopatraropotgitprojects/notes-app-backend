@@ -83,4 +83,18 @@ router.get('/debug', async (req, res) => {
     res.json(notes)
 })
 
+router.get('/', async (req, res) => {
+    const trashed = req.query.trashed === 'true'
+    try {
+        const notes = await prisma.note.findMany({
+            where: { trashed },
+            orderBy: { createdAt: 'desc' },
+        })
+        res.json(notes)
+    } catch (err) {
+        console.error('Error fetching notes:', err)
+        res.status(500).json({ error: 'Server error' })
+    }
+})
+
 module.exports = router
