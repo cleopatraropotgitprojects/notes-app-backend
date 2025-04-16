@@ -6,9 +6,11 @@ const prisma = new PrismaClient()
 
 // GET /api/notes
 router.get('/', async (req, res) => {
+    const trashed = req.query.trashed === 'true'
     try {
         const notes = await prisma.note.findMany({
-            orderBy: { createdAt: 'desc' }
+            where: { trashed },
+            orderBy: { createdAt: 'desc' },
         })
         res.json(notes)
     } catch (err) {
@@ -44,6 +46,7 @@ router.patch('/:id', async (req, res) => {
                 description: req.body.description,
                 tags: req.body.tags,
                 location: req.body.location,
+                pinned: req.body.pinned,
             },
         })
         res.json(updatedNote)
@@ -81,20 +84,6 @@ router.delete('/:id', async (req, res) => {
 router.get('/debug', async (req, res) => {
     const notes = await prisma.note.findMany()
     res.json(notes)
-})
-
-router.get('/', async (req, res) => {
-    const trashed = req.query.trashed === 'true'
-    try {
-        const notes = await prisma.note.findMany({
-            where: { trashed },
-            orderBy: { createdAt: 'desc' },
-        })
-        res.json(notes)
-    } catch (err) {
-        console.error('Error fetching notes:', err)
-        res.status(500).json({ error: 'Server error' })
-    }
 })
 
 module.exports = router

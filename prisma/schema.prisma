@@ -14,5 +14,6 @@ model Note {
   tags        String[]
   createdAt   DateTime @default(now())
   location    String?
+  pinned      Boolean  @default(false)
   trashed     Boolean  @default(false)
 }
