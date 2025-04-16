@@ -27,6 +27,7 @@ router.post('/', async (req, res) => {
                 description: req.body.description || '',
                 tags: Array.isArray(req.body.tags) ? req.body.tags : [],
                 location: req.body.location || null,
+                trashed: false,
             }
         })
         res.status(201).json(newNote)
