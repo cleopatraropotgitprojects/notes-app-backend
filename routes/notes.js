@@ -53,12 +53,24 @@ router.patch('/:id', async (req, res) => {
     }
 })
 
+router.patch('/:id/trash', async (req, res) => {
+    const { id } = req.params
+    try {
+        const trashedNote = await prisma.note.update({
+            where: { id },
+            data: { trashed: true },
+        })
+        res.json(trashedNote)
+    } catch (err) {
+        console.error('❌ Error trashing note:', err)
+        res.status(500).json({ error: 'Could not trash note' })
+    }
+})
+
 router.delete('/:id', async (req, res) => {
     const { id } = req.params
     try {
-        await prisma.note.delete({
-            where: { id }
-        })
+        await prisma.note.delete({ where: { id } })
         res.status(204).end()
     } catch (err) {
         console.error('❌ Error deleting note:', err)
