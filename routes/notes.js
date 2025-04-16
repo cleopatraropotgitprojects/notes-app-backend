@@ -34,6 +34,25 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.patch('/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const updatedNote = await prisma.note.update({
+            where: { id },
+            data: {
+                title: req.body.title,
+                description: req.body.description,
+                tags: req.body.tags,
+                location: req.body.location,
+            },
+        })
+        res.json(updatedNote)
+    } catch (err) {
+        console.error('❌ Error updating note:', err)
+        res.status(500).json({ error: 'Could not update note' })
+    }
+})
+
 router.get('/debug', async (req, res) => {
     const notes = await prisma.note.findMany()
     res.json(notes)
