@@ -34,4 +34,9 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.get('/debug', async (req, res) => {
+    const notes = await prisma.note.findMany()
+    res.json(notes)
+})
+
 module.exports = router
