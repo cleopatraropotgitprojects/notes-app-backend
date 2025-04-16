@@ -47,6 +47,7 @@ router.patch('/:id', async (req, res) => {
                 tags: req.body.tags,
                 location: req.body.location,
                 pinned: req.body.pinned,
+                trashed: req.body.trashed,
             },
         })
         res.json(updatedNote)
@@ -79,11 +80,6 @@ router.delete('/:id', async (req, res) => {
         console.error('❌ Error deleting note:', err)
         res.status(500).json({ error: 'Could not delete note' })
     }
-})
-
-router.get('/debug', async (req, res) => {
-    const notes = await prisma.note.findMany()
-    res.json(notes)
 })
 
 module.exports = router
